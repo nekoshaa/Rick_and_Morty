@@ -11,6 +11,12 @@ const ShopItemsList = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
+  const [value, setValue] = useState("")
+
+  const filterCharachers = character.filter(characters => {
+    return characters.name.toLowerCase().includes(value.toLocaleLowerCase())
+  })
+
 
   const fetchData = () => {
     setIsLoading(true)
@@ -34,8 +40,17 @@ const ShopItemsList = () => {
   }, [])
 
   return (
+
     <>
-      {character.map((character) => {
+      <form className='search'>
+        <input
+          type='text'
+          placeholder='Найти персонажа...'
+          onChange={(event) => setValue(event.target.value)}
+        />
+
+      </form>
+      {filterCharachers.map((character) => {
         return <ShopItem key={character.image} name={character.name} status={character.status} species={character.species} gender={character.gender} image={character.image} location={character.location.name} url={character.url} episode={character.created} />
 
 

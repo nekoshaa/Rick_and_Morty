@@ -58,3 +58,23 @@ code {
     box-sizing: border-box;
     justify-content: flex-start;
 }
+
+#Characters {
+    background-color: rgb(255, 255, 255);
+    margin: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 400px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.search {
+    margin: 10px;
+    padding: 0px;
+    box-sizing: border-box;
+}
