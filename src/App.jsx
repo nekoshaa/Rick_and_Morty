@@ -14,23 +14,14 @@ const App = () => {
   return (
     <div className="App">
       <Bar />
-
       <Routes>
         <Route path="/carousel" element={<CarouselCard />} />
         <Route path="/" element={<ShopItemsList />} />
         <Route path="/content" element={<Content />} />
-
       </Routes>
       <Pagination
-
-
-
       />
       <Footer />
-
-
-
-
     </div>
 
   );
