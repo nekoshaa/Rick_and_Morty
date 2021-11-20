@@ -4,9 +4,13 @@ import { Modal, Button } from 'react-bootstrap'
 
 const ShopItemModal = (props) => {
 
-  const name = props.character.name || ""
+
+  const episodes = props.character.episode || []
+  console.log(episodes);
 
   const locationName = props.character.location?.name || ""
+
+
 
   return (
     <Modal
@@ -29,7 +33,9 @@ const ShopItemModal = (props) => {
         <p>Пол: {props.character.gender}</p>
         <p>Первое появление: {props.character.created}</p>
         <p>Локация: {locationName}</p>
-        <p>Эпизоды: {props.character.episode}</p>
+        {episodes.map((episode) => {
+          return <Button key={episode}>Episode</Button>
+        })}
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>
