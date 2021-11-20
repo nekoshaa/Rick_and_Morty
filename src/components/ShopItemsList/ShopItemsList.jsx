@@ -3,6 +3,8 @@ import axios from 'axios'
 import ShopItem from '../ShopItem/ShopItem'
 import ShopItemModal from '../ShopItem/ShopItemModal'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { Button } from 'react-bootstrap'
+
 
 
 const ShopItemsList = () => {
@@ -10,11 +12,15 @@ const ShopItemsList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [character, setCharacter] = useState({})
   const [characters, setCharacters] = useState([])
-  const [episode, setEpisode] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const [value, setValue] = useState('')
+  const [pageAmount, setPageAmount] = useState('')
+  const [page, setPage] = useState(1)
+  const [response, setResponse] = useState({})
+  const [prevBtnDisabled, setPrevBtnDisabled] = useState(false)
+  const [nextBtnDisabled, setNextBtnDisabled] = useState(false)
   //const [endPoint, setEndPoint] = useState('https://rickandmortyapi.com/api/character/')
 
 
@@ -30,10 +36,10 @@ const ShopItemsList = () => {
 
   const fetchData = () => {
     setIsLoading(true)
-    axios.get("https://rickandmortyapi.com/api/character/")
+    axios.get(`https://rickandmortyapi.com/api/character/?page=${page}`)
       .then(function (response) {
+        setResponse(response.data)
         setCharacters(response.data.results)
-        console.log(response);
         // setPhotosList(response.data)
         // setIsLoading(false)
       })
@@ -49,12 +55,22 @@ const ShopItemsList = () => {
 
   useEffect(() => {
     fetchData('scroll', scrollHandler)
-
-  }, [])
+    setPageAmount(response.info?.pages || 1)
+    if (page == 1) {
+      setPrevBtnDisabled(true)
+    }
+    if (page == pageAmount) {
+      setNextBtnDisabled(true)
+    }
+  }, [page])
 
   return (
 
     <>
+      <Button disabled={prevBtnDisabled} onClick={() => { setPage(page - 1) }}>Prev page</Button>
+      <Button disabled={nextBtnDisabled} onClick={() => { setPage(page + 1) }}>Next page</Button>
+      <h1>Total pages: {pageAmount}</h1>
+      <h1>Current page: {page}</h1>
       <form className='search'>
         <input
           type='text'
@@ -84,13 +100,6 @@ const ShopItemsList = () => {
           url={character.url}
           episode={character.episode}
           episode={character.created} />
-
-
-
-
-
-
-
       })}
       {/* {isLoading
         ?
@@ -106,10 +115,8 @@ const ShopItemsList = () => {
           })}
         </div>
       } */}
-
-
-
-
+      <Button disabled={prevBtnDisabled} onClick={() => { setPage(page - 1) }}>Prev page</Button>
+      <Button disabled={nextBtnDisabled} onClick={() => { setPage(page + 1) }}>Next page</Button>
     </>
   )
 
