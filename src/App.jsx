@@ -7,6 +7,7 @@ import CarouselCard from './components/Carousel/CarouselCard';
 import { Routes, Route, Link } from 'react-router-dom';
 import Footer from './components/Footer/Footer'
 import Content from './components/Content/Content'
+import Pagination from './components/Pagination/Pagination';
 
 const App = () => {
 
@@ -20,7 +21,11 @@ const App = () => {
         <Route path="/content" element={<Content />} />
 
       </Routes>
+      <Pagination
 
+
+
+      />
       <Footer />
 
 
@@ -32,3 +37,4 @@ const App = () => {
 }
 
 export default App;
+
