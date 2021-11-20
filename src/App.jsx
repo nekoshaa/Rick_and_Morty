@@ -19,8 +19,7 @@ const App = () => {
         <Route path="/" element={<ShopItemsList />} />
         <Route path="/content" element={<Content />} />
       </Routes>
-      <Pagination
-      />
+      <Pagination />
       <Footer />
     </div>
 
