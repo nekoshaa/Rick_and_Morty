@@ -6,7 +6,8 @@ const ShopItemModal = (props) => {
 
 
   const episodes = props.character.episode || []
-  console.log(episodes);
+
+
 
   const locationName = props.character.location?.name || ""
 
@@ -34,7 +35,12 @@ const ShopItemModal = (props) => {
         <p>Первое появление: {props.character.created}</p>
         <p>Локация: {locationName}</p>
         {episodes.map((episode) => {
-          return <Button key={episode}>Episode</Button>
+
+
+          let arr = episode.split('/')
+          let i = arr[arr.length - 1]
+          console.log(i);
+          return <Button key={episode}>Episode {i}</Button>
         })}
       </Modal.Body>
       <Modal.Footer>

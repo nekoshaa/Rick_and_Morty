@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ShopItemsList from './components/ShopItemsList/ShopItemsList'
 import Bar from './components/Bar/Bar'
-import './App.css'
+import './index.css'
 import CarouselCard from './components/Carousel/CarouselCard';
 import { Routes, Route, Link } from 'react-router-dom';
 import Footer from './components/Footer/Footer'

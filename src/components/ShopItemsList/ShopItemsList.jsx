@@ -24,9 +24,7 @@ const ShopItemsList = () => {
   //const [endPoint, setEndPoint] = useState('https://rickandmortyapi.com/api/character/')
 
 
-  const scrollHandler = (e) => {
-    console.log('scroll')
-  }
+
 
 
   const filterCharachers = characters.filter(character => {
@@ -54,7 +52,7 @@ const ShopItemsList = () => {
 
 
   useEffect(() => {
-    fetchData('scroll', scrollHandler)
+    fetchData()
     setPageAmount(response.info?.pages || 1)
     if (page == 1) {
       setPrevBtnDisabled(true)
