@@ -3,15 +3,8 @@ import { Modal, Button } from 'react-bootstrap'
 
 
 const ShopItemModal = (props) => {
-
-
   const episodes = props.character.episode || []
-
-
-
   const locationName = props.character.location?.name || ""
-
-
 
   return (
     <Modal
@@ -47,6 +40,5 @@ const ShopItemModal = (props) => {
     </Modal>
   );
 }
-
 
 export default ShopItemModal
