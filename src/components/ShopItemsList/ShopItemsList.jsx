@@ -3,7 +3,7 @@ import axios from 'axios'
 import ShopItem from '../ShopItem/ShopItem'
 import ShopItemModal from '../ShopItem/ShopItemModal'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { Button } from 'react-bootstrap'
+import { Button, CardGroup, FloatingLabel, Form } from 'react-bootstrap'
 
 
 
@@ -16,9 +16,9 @@ const ShopItemsList = () => {
   const [isError, setIsError] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const [value, setValue] = useState('')
-  const [pageAmount, setPageAmount] = useState('')
+  const [pageAmount, setPageAmount] = useState(1)
+  const [pages, setPages] = useState([])
   const [page, setPage] = useState(1)
-  const [response, setResponse] = useState({})
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(false)
   const [nextBtnDisabled, setNextBtnDisabled] = useState(false)
   //const [endPoint, setEndPoint] = useState('https://rickandmortyapi.com/api/character/')
@@ -36,8 +36,9 @@ const ShopItemsList = () => {
     setIsLoading(true)
     axios.get(`https://rickandmortyapi.com/api/character/?page=${page}`)
       .then(function (response) {
-        setResponse(response.data)
         setCharacters(response.data.results)
+        console.log(response.data);
+        setPageAmount(response.data.info?.pages || 1)
         // setPhotosList(response.data)
         // setIsLoading(false)
       })
@@ -49,16 +50,23 @@ const ShopItemsList = () => {
       })
   }
 
-
+  useEffect(() => {
+    const tempArray = []
+    for (let i = 1; i <= pageAmount; i++) {
+      tempArray.push(i)
+    }
+    setPages(tempArray)
+  }, [pageAmount])
 
   useEffect(() => {
     fetchData()
-    setPageAmount(response.info?.pages || 1)
-    if (page == 1) {
+    if (page === 1) {
       setPrevBtnDisabled(true)
-    }
-    if (page == pageAmount) {
+    } else if (page === pageAmount) {
       setNextBtnDisabled(true)
+    } else {
+      setPrevBtnDisabled(false)
+      setNextBtnDisabled(false)
     }
   }, [page])
 
@@ -66,39 +74,46 @@ const ShopItemsList = () => {
 
     <>
       <Button disabled={prevBtnDisabled} onClick={() => { setPage(page - 1) }}>Prev page</Button>
+      {pages.map((number) => {
+        return (<Button onClick={() => { setPage(number) }}>{number}</Button>)
+      })}
       <Button disabled={nextBtnDisabled} onClick={() => { setPage(page + 1) }}>Next page</Button>
       <h1>Total pages: {pageAmount}</h1>
       <h1>Current page: {page}</h1>
-      <form className='search'>
-        <input
-          type='text'
-          placeholder='Найти персонажа...'
-          onChange={(event) => setValue(event.target.value)}
-        />
 
-      </form>
+      <FloatingLabel
+        controlId="floatingInput"
+        label='Найти персонажа...'
+        className="mb-3"
+      >
+        <Form.Control type="text" placeholder='Найти персонажа...' onChange={(event) => setValue(event.target.value)} />
+      </FloatingLabel>
       <ShopItemModal show={isModalOpen} character={character} onHide={() => { setIsModalOpen(false) }} />
-      {filterCharachers.map((character) => {
-        return <ShopItem
-          key={character.id}
-          onButtonClick={
-            () => {
-              setCharacter(character)
-              setIsModalOpen(true)
-            }
-          }
-          origin={character.origin}
-          id={character.id}
-          name={character.name}
-          status={character.status}
-          species={character.species}
-          gender={character.gender}
-          image={character.image}
-          location={character.location.name}
-          url={character.url}
-          episode={character.episode}
-          episode={character.created} />
-      })}
+      <CardGroup>
+        {filterCharachers.map((character) => {
+          return (
+            <ShopItem
+              key={character.id}
+              onButtonClick={
+                () => {
+                  setCharacter(character)
+                  setIsModalOpen(true)
+                }
+              }
+              origin={character.origin}
+              id={character.id}
+              name={character.name}
+              status={character.status}
+              species={character.species}
+              gender={character.gender}
+              image={character.image}
+              location={character.location.name}
+              url={character.url}
+              episode={character.episode}
+              episode={character.created} />
+          )
+        })}
+      </CardGroup>
       {/* {isLoading
         ?
         <h1>Loading...</h1>

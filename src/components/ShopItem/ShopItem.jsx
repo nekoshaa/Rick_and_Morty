@@ -6,7 +6,7 @@ import { Card, Button } from 'react-bootstrap'
 const ShopItem = ({ name, image, onButtonClick }) => {
   return (
 
-    <Card.Body className='mainCharacters'>
+    <Card.Body className=''>
 
       <div id='Characters'>
 

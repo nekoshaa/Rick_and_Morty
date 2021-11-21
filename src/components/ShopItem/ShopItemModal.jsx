@@ -35,8 +35,6 @@ const ShopItemModal = (props) => {
         <p>Первое появление: {props.character.created}</p>
         <p>Локация: {locationName}</p>
         {episodes.map((episode) => {
-
-
           let arr = episode.split('/')
           let i = arr[arr.length - 1]
           console.log(i);
